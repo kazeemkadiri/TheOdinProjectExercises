@@ -1,0 +1,36 @@
+form {
+  display: none;
+  flex-direction: column;
+}               
+
+input.book-prop{
+  height: 28px;
+  width: 100%;
+  color: darkgrey;
+  border: 1px solid lightgrey;
+  text-indent: 3px;
+  font-size: 20px;
+  vertical-align: center;
+  margin-bottom: 5px;
+}                       
+               
+form button{
+  color: white;
+  background: steelblue;
+}            
+
+.btn{
+  padding: 1rem 2rem;
+  font-size: 1.2em;
+  border-radius: 4px;
+} 
+
+.bg-green{
+ background-color: green;
+ color: white;
+}
+
+.show{
+ display: flex;
+}             
+                                     
