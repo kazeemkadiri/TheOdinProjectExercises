@@ -12,16 +12,32 @@ function initializeDomListeners(){
       this.setAttribute("disabled", "disabled");
     });
 }
-
-function Book() {
+                                                            
+function Book({title, numPages, author, pubDate}) {
   // the constructor...
+  this.title = title;
+  this.numberOfPages = numPages;
+  this.author = author;
+  this.publishedDate = pubDate;
 }
 
 function addBookToLibrary() {
-  const bookProps = document.querySelectorAll("input .book-prop");
-  bookProps.forEach(bookProp => {
-  	console.log(bookProp.value);
-  })
+  const bookPropsElements = document.querySelectorAll("input.book-prop");
+                                                              
+  const bookProps = {};
+                 
+  bookPropsElements.forEach(bookProp => {
+    bookProps[bookProp.id.split("-")[1]] = bookProp.value
+  });
+ 
+  myLibrary.push(new Book(bookProps));
+
+  resetFormFields();
+ 
+}
+
+function resetFormFields(){
+  bookForm.reset();
 }
 
 function displayForm(){
@@ -31,4 +47,4 @@ function displayForm(){
 function preventFormSubmit(e){
   e.preventDefault();
 }
-    
+
