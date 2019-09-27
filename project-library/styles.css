@@ -1,3 +1,7 @@
+:root{
+ --defaultblue: steelblue;
+}
+ 
 form {
   display: none;
   flex-direction: column;
@@ -12,18 +16,24 @@ input.book-prop{
   font-size: 20px;
   vertical-align: center;
   margin-bottom: 5px;
-}                       
-               
-form button{
-  color: white;
-  background: steelblue;
-}            
-
+}                                                    
+                   
 .btn{
   padding: 1rem 2rem;
   font-size: 1.2em;
   border-radius: 4px;
 } 
+           
+button#done-button{
+  border: 1px solid var(--defaultblue);
+  color: var(--defaultblue);
+  background: white;
+}                            
+                             
+.bg-steelblue{
+  background-color: var(--defaultblue);
+  color: white;
+}
 
 .bg-green{
  background-color: green;

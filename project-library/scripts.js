@@ -4,10 +4,10 @@ window.onload = () => {
 
 let myLibrary = [];
 const bookForm = document.querySelector("form");
-
+const newBookButton = document.querySelector("#new-book")
+      
 function initializeDomListeners(){
-  document.querySelector("#new-book")
-    .addEventListener("click", function(){
+    newBookButton.addEventListener("click", function(){
       displayForm();
       this.setAttribute("disabled", "disabled");
     });
@@ -36,12 +36,21 @@ function addBookToLibrary() {
  
 }
 
+function hideBookForm(){
+  bookForm.classList.remove("show");
+  newBookButton.removeAttribute("disabled");
+}
+
 function resetFormFields(){
   bookForm.reset();
 }
 
 function displayForm(){
   bookForm.classList.toggle("show");
+}
+
+function render(){
+  
 }
 
 function preventFormSubmit(e){
