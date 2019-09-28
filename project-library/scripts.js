@@ -27,11 +27,16 @@ function Book({title, numPages, author, pubDate}) {
   this.numberOfPages = numPages;
   this.author = author;
   this.publishedDate = pubDate;
+  this.read = false;
+}
+
+Book.prototype.toggleRead = function(){
+  this.read = !this.read;
 }
 
 function addBookToLibrary() {
   const bookPropsElements = document.querySelectorAll("input.book-prop");
-                                                              
+                  		                                            
   const bookProps = {};
                  
   bookPropsElements.forEach(bookProp => {
@@ -72,25 +77,41 @@ function render(){
         <span class="color-grey">Date Of Publication: </span>
         ${book.publishedDate}
       </p>
-       <button class="btn bg-red del-book-btn" data-book-id="${bookIndex}">
+       <button class="btn bg-red book-btn del-book-btn" data-book-id="${bookIndex}">
          Remove
        </button>
+       <button class="btn book-btn read-book" data-book-id="${bookIndex}">
+         Mark as ${book.read ? "unread" : "read"}
+       </button> 
       </div>
       </li>`;
   });
-										
+		 	  	 		 		 	          							
   bookListElement.innerHTML = htmlBookList;
   
-  addListenersForRemoveBooksBtn();
+  addListenersForBooksBtns();
 }
 
-function addListenersForRemoveBooksBtn(){
-  document.querySelectorAll(".del-book-btn")
-    .forEach(delBtn => {
-      delBtn.addEventListener("click", handleDeleteBook);
+function addListenersForBooksBtns(){
+
+  document.querySelectorAll(".book-btn")
+    .forEach(btn => {
+      if(btn.classList.contains("del-book-btn")){
+        btn.addEventListener("click", handleDeleteBook);
+        return;
+      }
+    
+      btn.addEventListener("click", handleReadBook);
+ 						                     
     });
-} 
-						
+
+}
+
+function handleReadBook(){
+  myLibrary[this.dataset.bookId].toggleRead();
+  render();
+}
+	
 function handleDeleteBook(){
   myLibrary.splice(this.dataset.bookId, 1);
   render();
