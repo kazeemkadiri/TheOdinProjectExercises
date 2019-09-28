@@ -43,4 +43,16 @@ button#done-button{
 .show{
  display: flex;
 }             
-                                     
+
+.card{
+ width: 300px;
+ height: auto;
+ padding: 1rem;
+ box-shadow: 1px 5px 3px 0px rgba(0,0,0,0.5);
+}                                    
+
+.book-list ul li, ul{
+ margin: 0px !important;
+ padding: 0px !important;
+}	   
+ 	         
