@@ -60,8 +60,8 @@ function displayForm(){
 }
 
 function render(){
-  
-  const htmlBookList = myLibrary.map(book => {
+  				     
+  const htmlBookList = myLibrary.map((book, bookIndex) => {
     return `<li>
       <div class="card">
       <h3 class="card-title">${book.title}</h3>
@@ -72,15 +72,28 @@ function render(){
         <span class="color-grey">Date Of Publication: </span>
         ${book.publishedDate}
       </p>
-       <button class="btn bg-red">
-         Delete
+       <button class="btn bg-red del-book-btn" data-book-id="${bookIndex}">
+         Remove
        </button>
       </div>
       </li>`;
   });
-
+										
   bookListElement.innerHTML = htmlBookList;
   
+  addListenersForRemoveBooksBtn();
+}
+
+function addListenersForRemoveBooksBtn(){
+  document.querySelectorAll(".del-book-btn")
+    .forEach(delBtn => {
+      delBtn.addEventListener("click", handleDeleteBook);
+    });
+} 
+						
+function handleDeleteBook(){
+  myLibrary.splice(this.dataset.bookId, 1);
+  render();
 }
 
 function preventFormSubmit(e){
