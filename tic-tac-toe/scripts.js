@@ -1,43 +1,81 @@
 const gameBoard = (() => {
-  const gameBoxes = document.querySelectorAll(".game-play-box");
+  const players = {};
+  let activePlayer = null;
   
+  const gameBoxes = document.querySelectorAll(".game-play-box");
   
   const handleGameBoxClicked = (event) => {
     
-    alert(event.target.dataset.boxId);
+    //alert(event.target.dataset.boxId);    
+      saveMarkedBox(event.target.dataset.boxId);
+    
+    console.log(activePlayer.getMarkedBoxes())
+  }
+  
+  const saveMarkedBox = (boxId) => {
+    
+    activePlayer.storeMarkedBoxId(boxId);
     
   }
   
-  const documentLog = (logString) => {
+  const setActivePlayer = player => {
+  	 activePlayer = player;
+  }
+  
+  const registerPlayers = (player1, player2) => {
   	
-    const p = document.createElement("p");
+    this.players = { player1, player2 };
     
-    p.textContent = target.dataset.boxId;
-    document.querySelector("body")
-    .appendChild(logString);
+    setActivePlayer(player1);
     
   }
+  
+  //const documentLog = (logString) => {
+  	
+    //const p = document.createElement("p");
+    
+    //p.textContent = target.dataset.boxId;
+    //document.querySelector("body")
+    //.appendChild(logString);
+    
+//¹  }
 						
   gameBoxes.forEach(gameBox => {
     gameBox.addEventListener("click", handleGameBoxClicked);
   });
 
+  return {
+  	 registerPlayers
+  }
+  
 })();
 
 //Factory function for players
 const Player = (name, marker) => {
-  this.name = name;
-  this.marker = marker;
+  const pName = name;
+  const pMarker = marker;
+  const markedBoxes = [];
   
-  this.getName = () => this.name;
-  this.getMarker = () => this.marker;
+  const getName = () => { return pName };
+  const getMarker = () => { return pMarker };
+  const storeMarkedBoxId = (boxId) => {
+  	  markedBoxes.push(boxId);
+  };
+  const getMarkedBoxes = () => {
+  	return markedBoxes.join("-");
+  }
   
   return {
     getName,
-    getMarker
+    getMarker,
+    storeMarkedBoxId,
+    getMarkedBoxes
   }
 }
 
-//const player1 = Player("Qasim", "X");
-//const player2 = Player("Jalasem", "O");
+const player1 = Player("Qasim", "X");
+const player2 = Player("Jalasem", "O");
+
+gameBoard.registerPlayers(player1, player2);
+
 
