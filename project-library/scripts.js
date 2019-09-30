@@ -1,6 +1,7 @@
 
  let myLibrary = [];
  
+ const DOMlog = document.querySelector(".dom-log");
  const bookForm = document.querySelector("form");
  const newBookButton = document.querySelector("#new-book")
  const doneButton = document.querySelector("#done-btn");
@@ -10,6 +11,7 @@
  render();
 
 function initializeDomListeners(){
+	
   newBookButton.addEventListener("click", function(){
     displayForm();
     this.setAttribute("disabled", "disabled");
@@ -18,22 +20,22 @@ function initializeDomListeners(){
   doneButton.addEventListener("click", hideBookForm);
 
   addBookButton.addEventListener("click", addBookToLibrary);
-        
 }
-                                                            
-function Book({title, numPages, author, pubDate}) {
+                           		                                          
+function Book({title, numpages, author, pubdate}) {
   // the constructor...
   this.title = title;
-  this.numberOfPages = numPages;
+  this.numpages = numpages;
   this.author = author;
-  this.publishedDate = pubDate;
+  this.pubdate = pubdate;
   this.read = false;
 }
-
+			   
 Book.prototype.toggleRead = function(){
-  this.read = !this.read;
-}
-
+  this.read = !Boolean(this.read);   
+  return;  
+};
+		 			
 function addBookToLibrary() {
   const bookPropsElements = document.querySelectorAll("input.book-prop");
                   		                                            
@@ -42,13 +44,30 @@ function addBookToLibrary() {
   bookPropsElements.forEach(bookProp => {
     bookProps[bookProp.id.split("-")[1]] = bookProp.value
   });
- 
-  myLibrary.push(new Book(bookProps));
+
+  let newBook = new Book(bookProps);
+    	   
+  //console.log(JSON.stringify(newBook));
+
+  myLibrary.push(newBook);
+  
+  persistLibToLocalStor();
 
   render();
 
   resetFormFields();
  
+}
+
+function persistLibToLocalStor(){
+  //DOMlog.append = "persist" + JSON.stringify(myLibrary);
+  
+  localStorage.removeItem("myLibrary");
+  
+  localStorage.setItem(
+    "myLibrary", JSON.stringify(myLibrary));
+    
+  return;
 }
 
 function hideBookForm(){
@@ -65,8 +84,19 @@ function displayForm(){
 }
 
 function render(){
-  				     
+	 
+  if(myLibrary.length === 0){
+    
+    const tempLib = localStorage.getItem("myLibrary");
+
+    myLibrary = (tempLib !== null) ? JSON.parse(tempLib) : myLibrary;
+    	
+    myLibrary = myLibrary.map(book => new Book(book));
+						
+  } 
+																	          	     
   const htmlBookList = myLibrary.map((book, bookIndex) => {
+   
     return `<li>
       <div class="card">
       <h3 class="card-title">${book.title}</h3>
@@ -75,18 +105,18 @@ function render(){
         ${book.author}
         
         <span class="color-grey">Date Of Publication: </span>
-        ${book.publishedDate}
+        ${book.pubdate}
       </p>
        <button class="btn bg-red book-btn del-book-btn" data-book-id="${bookIndex}">
          Remove
        </button>
        <button class="btn book-btn read-book" data-book-id="${bookIndex}">
-         Mark as ${book.read ? "unread" : "read"}
+         Mark as ${book.read === true ? "unread" : "read"}
        </button> 
       </div>
       </li>`;
   });
-		 	  	 		 		 	          							
+		   		    	 	  	 		 		 	          							
   bookListElement.innerHTML = htmlBookList;
   
   addListenersForBooksBtns();
@@ -106,19 +136,20 @@ function addListenersForBooksBtns(){
     });
 
 }
-
+              
 function handleReadBook(){
-  myLibrary[this.dataset.bookId].toggleRead();
-  render();
+  Promise.resolve(myLibrary[this.dataset.bookId].toggleRead())
+  .then(toggledRead => persistLibToLocalStor())
+  .then(persisted => render())
+  //.then(res => DOMlog.innerHTML = " ff"+localStorage.getItem("myLibrary"))
 }
-	
+												
 function handleDeleteBook(){
   myLibrary.splice(this.dataset.bookId, 1);
+  persistLibToLocalStor();
   render();
 }
 
 function preventFormSubmit(e){
   e.preventDefault();
 }
-
-    

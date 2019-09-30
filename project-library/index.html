@@ -1,21 +1,21 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Library Project</title>
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body style="text-align: center;">
-  
+<!--  <p class="dom-log"><p> --> 
   <button id="new-book" class="btn bg-green">New Book</button>
-  
+                             
   <form>
     <h3 class="form-title">ADD NEW BOOK</h3>
     <p>Fill in the form fields below to add a new book</p>
 
     <input type="text" class="book-prop" id="book-title" placeholder="Book Title" required autovalidate/>
-    <input type="text" class="book-prop" pattern="\d{1,4}" id="book-numPages"  placeholder="Number Of Pages (digits)" required autovalidate>
+    <input type="text" class="book-prop" pattern="\d{1,4}" id="book-numpages"  placeholder="Number Of Pages (digits)" required autovalidate>
     <input type="text" class="book-prop" id="book-author" placeholder="Author" required autovalidate/>
-    <input type="date" class="book-prop" id="book-pubDate" placeholder="Published Date" required autovalidate/>
+    <input type="date" class="book-prop" id="book-pubdate" placeholder="Published Date" required autovalidate/>
     <button type="button" id="add-book" class="btn bg-steelblue">Add book</button>
     <button type="button" id="done-btn" class="btn">Done</button>
     
@@ -26,4 +26,6 @@
    <ul></ul>
  </div>
 </body>
+
 <script type="text/javascript" src="./scripts.js"></script>
+    
