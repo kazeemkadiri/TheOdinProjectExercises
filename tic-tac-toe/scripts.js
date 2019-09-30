@@ -6,10 +6,12 @@ const gameBoard = (() => {
   
   const handleGameBoxClicked = (event) => {
     
+      let boxElement = event.target;
+      
     //alert(event.target.dataset.boxId);    
-      saveMarkedBox(event.target.dataset.boxId);
-    
-    console.log(activePlayer.getMarkedBoxes())
+       markGameBox(boxElement);
+       saveMarkedBox(boxElement.dataset.boxId);
+     
   }
   
   const saveMarkedBox = (boxId) => {
@@ -20,6 +22,10 @@ const gameBoard = (() => {
   
   const setActivePlayer = player => {
   	 activePlayer = player;
+  }
+  
+  const markGameBox = boxElement => {
+  	  boxElement.textContent = activePlayer.getMarker();
   }
   
   const registerPlayers = (player1, player2) => {
