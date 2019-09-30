@@ -1,0 +1,19 @@
+div#game-container{
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 500px;
+  border: 2px solid rgba(0,0,0,0.8);
+}
+				  
+div.game-play-box{
+  flex: 1;
+  border: 2px solid rgba(0,0,0,0.8);
+  background: yellow;
+  opacity: 0.6;
+}
+
+div.row{
+  display: flex;
+  flex: 1;
+}
