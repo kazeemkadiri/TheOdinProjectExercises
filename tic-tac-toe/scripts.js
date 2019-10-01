@@ -9,8 +9,13 @@ const gameBoard = (() => {
       let boxElement = event.target;
       
     //alert(event.target.dataset.boxId);    
-       markGameBox(boxElement);
-       saveMarkedBox(boxElement.dataset.boxId);
+       if(markGameBox(boxElement)){
+       	  saveMarkedBox(boxElement.dataset.boxId);     
+       //console.log(activePlayer.getMarkedBoxes().join("-"));
+       
+       toggleActivePlayer();
+      
+       }
      
   }
   
@@ -20,17 +25,30 @@ const gameBoard = (() => {
     
   }
   
+  const toggleActivePlayer = () => {
+  	
+  	  activePlayer = (players.player1 === activePlayer) ? players.player2 : players.player1;
+  	  
+ }
+  
   const setActivePlayer = player => {
   	 activePlayer = player;
   }
   
   const markGameBox = boxElement => {
+  	  const { textContent } = boxElement;
+  	  
+  	  if( textContent !== "" ) return false;
+  	  
   	  boxElement.textContent = activePlayer.getMarker();
+  	  
+  	  return true;
   }
   
   const registerPlayers = (player1, player2) => {
   	
-    this.players = { player1, player2 };
+    players.player1 = player1;
+    players.player2 = player2;
     
     setActivePlayer(player1);
     
@@ -68,7 +86,7 @@ const Player = (name, marker) => {
   	  markedBoxes.push(boxId);
   };
   const getMarkedBoxes = () => {
-  	return markedBoxes.join("-");
+  	return markedBoxes;
   }
   
   return {
