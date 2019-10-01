@@ -15,7 +15,8 @@ const gameBoard = (() => {
   const gameBoxes = document.querySelectorAll(".game-play-box");
   
   const handleGameBoxClicked = (event) => {
-    
+      if(activePlayer === null) return;
+      
       let boxElement = event.target;
       
     //alert(event.target.dataset.boxId);    
@@ -24,14 +25,18 @@ const gameBoard = (() => {
        //console.log(activePlayer.getMarkedBoxes().join("-"));
        if( activePlayer.getMarkedBoxes().length >= 3 
        	&& verifyWin() === true ){
-       	//endGame();
-       	//return;
+       	endGame();
+       	return;
        }
        
        toggleActivePlayer();
       
        }
      
+  }
+  
+  const endGame = () => {
+   activePlayer = null;
   }
   
   const verifyWin = () => {
