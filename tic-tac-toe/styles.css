@@ -20,3 +20,8 @@ div.row{
   display: flex;
   flex: 1;
 }
+
+.matched-box{
+  border:6px dashed steelblue !important;
+}	  
+                       

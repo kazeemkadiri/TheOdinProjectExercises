@@ -1,6 +1,6 @@
 const gameBoard = (() => {
   const players = {};
-  let activePlayer = null;
+  let activePlayer = matchPattern = null;
   const winPatterns = [
    [1,2,3],
    [4,5,6],
@@ -26,6 +26,7 @@ const gameBoard = (() => {
        if( activePlayer.getMarkedBoxes().length >= 3 
        	&& verifyWin() === true ){
        	endGame();
+       	highlightMatchedBoxes();
        	return;
        }
        
@@ -33,6 +34,12 @@ const gameBoard = (() => {
       
        }
      
+  }
+  
+  const highlightMatchedBoxes = () => {
+  	matchPattern.forEach(boxId => {
+  		gameBoxes[boxId - 1].classList.add("matched-box");
+  	})
   }
   
   const endGame = () => {
@@ -45,6 +52,8 @@ const gameBoard = (() => {
      .join("");
    
    return winPatterns.some( winPattern => {
+   	  matchPattern = winPattern;
+   	  
    	  return winPattern.reduce((prev, number) => {
    	  	  return prev += boxesMarked.indexOf(number) !== -1 ? 1 : 0;
    	  }, 0) === 3 ;
